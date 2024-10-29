@@ -1,123 +1,127 @@
+// Lista de produtos
 const produtos = [
   {
-    nome: "produto 1",
-    categoria: "Decoração",
-    preco: "45.00",
+    id: 1,
+    nome: "Produto A",
+    preco: 10,
+    categoria: "Impressão",
     imagem: "https://iili.io/2CBy9JR.png",
   },
   {
-    nome: "produto 2",
-    categoria: "Cama, Mesa e Banho",
-    preco: "50.00",
+    id: 2,
+    nome: "Produto B",
+    preco: 15,
+    categoria: "Estampas",
     imagem: "https://iili.io/2CBy9JR.png",
   },
   {
-    nome: "Produto 3",
-    categoria: "Perfumaria",
-    preco: "100.00",
+    id: 3,
+    nome: "Produto C",
+    preco: 20,
+    categoria: "Design Gráfico",
     imagem: "https://iili.io/2CBy9JR.png",
   },
-  // Continue com os produtos restantes...
+  {
+    id: 4,
+    nome: "Produto D",
+    preco: 25,
+    categoria: "Impressão",
+    imagem: "https://iili.io/2CBy9JR.png",
+  },
+  {
+    id: 5,
+    nome: "Produto E",
+    preco: 30,
+    categoria: "Impressão",
+    imagem: "https://iili.io/2CBy9JR.png",
+  },
 ];
 
+// Carrinho de compras
 let carrinho = [];
 
-function searchProduct() {
-  const input = document.getElementById("searchInput").value.toLowerCase();
-  const results = document.getElementById("searchResults");
-  results.innerHTML = "";
-
-  const produtosEncontrados = produtos.filter((produto) =>
-    produto.nome.toLowerCase().includes(input)
-  );
-  displayProducts(produtosEncontrados);
-}
-
-function filterByCategory(category) {
-  const results = document.getElementById("searchResults");
-  results.innerHTML = "";
-
-  const produtosFiltrados = produtos.filter(
-    (produto) => produto.categoria === category
-  );
-  displayProducts(produtosFiltrados);
-}
-
-function displayProducts(produtosArray) {
-  const results = document.getElementById("searchResults");
-  if (produtosArray.length > 0) {
-    produtosArray.forEach((produto) => {
-      const productDiv = document.createElement("div");
-      productDiv.classList.add("product");
-      productDiv.innerHTML = `
-                        <img src="${produto.imagem}" alt="${produto.nome}">
-                        <h2>${produto.nome}</h2>
-                        <p>Preço: R$ ${parseFloat(produto.preco).toFixed(2)}</p>
-                        <button onclick="addToCart('${produto.nome}', ${
-        produto.preco
-      })">Adicionar ao Carrinho</button>
-                    `;
-      results.appendChild(productDiv);
-    });
-  } else {
-    results.innerHTML = "<p>Nenhum produto encontrado.</p>";
-  }
-}
-
-function addToCart(nome, preco) {
-  carrinho.push({ nome, preco: parseFloat(preco) });
-  updateCart();
-}
-
-function updateCart() {
-  const cartItems = document.getElementById("cartItems");
-  cartItems.innerHTML = "";
-  let total = 0;
-  carrinho.forEach((item, index) => {
-    const li = document.createElement("li");
-    li.innerHTML = `${item.nome} - R$ ${item.preco.toFixed(
-      2
-    )} <button class="remove-btn" onclick="removeFromCart(${index})">Remover</button>`;
-    cartItems.appendChild(li);
-    total += item.preco;
+// Função para exibir os produtos
+function mostrarProdutos(listaProdutos = produtos) {
+  const produtosDiv = document.getElementById("produtos");
+  produtosDiv.innerHTML = "";
+  listaProdutos.forEach((produto) => {
+    const produtoDiv = document.createElement("div");
+    produtoDiv.className = "produto";
+    produtoDiv.innerHTML = `
+          <img src="${produto.imagem}" alt="${produto.nome}" style="width:100px;height:100px;">
+          <span>${produto.nome} - R$${produto.preco}</span>
+          <button class="bt" onclick="adicionarAoCarrinho(${produto.id})">Adicionar ao Carrinho</button>
+        `;
+    produtosDiv.appendChild(produtoDiv);
   });
-  document.getElementById("totalPrice").textContent = `R$ ${total.toFixed(2)}`;
 }
 
-function removeFromCart(index) {
-  carrinho.splice(index, 1);
-  updateCart();
+// Adiciona o produto ao carrinho
+function adicionarAoCarrinho(id) {
+  const produto = produtos.find((prod) => prod.id === id);
+  carrinho.push(produto);
+  atualizarCarrinho();
 }
 
-function checkout() {
-  const total = carrinho.reduce((acc, item) => acc + item.preco, 0);
-  if (total > 10) {
-    let message =
-      "Olá, gostaria de finalizar a compra dos seguintes itens:\n\n";
-    carrinho.forEach((item) => {
-      message += `- ${item.nome}: R$ ${item.preco.toFixed(2)}\n`;
-    });
-    message += `\nTotal: R$ ${total.toFixed(2)}`;
+// Remove o produto do carrinho
+function removerDoCarrinho(id) {
+  carrinho = carrinho.filter((produto) => produto.id !== id);
+  atualizarCarrinho();
+}
 
-    const encodedMessage = encodeURIComponent(message);
+// Atualiza a exibição do carrinho na sidebar
+function atualizarCarrinho() {
+  const carrinhoDiv = document.getElementById("carrinhoProdutos");
+  carrinhoDiv.innerHTML = ""; // Limpa o carrinho antes de exibir novamente
+  let total = 0;
+  carrinho.forEach((produto) => {
+    const produtoDiv = document.createElement("div");
+    produtoDiv.className = "produto";
+    produtoDiv.innerHTML = `
+        <span>${produto.nome} - R$${produto.preco}</span>
+        <button class="bt" onclick="removerDoCarrinho(${produto.id})">Removerㅤ</button>
+      `;
+    carrinhoDiv.appendChild(produtoDiv);
+    total += produto.preco;
+  });
+  document.getElementById("total").innerText = `Total: R$${total.toFixed(2)}`;
+}
 
-    // Substitua 'NUMERO' pelo número desejado
-    const whatsappNumber = "558898644389"; // Exemplo: (11) 99999-9999
-    const whatsappLink = `https://api.whatsapp.com/qr/PGJKMZLVUACEH1?autoload=${whatsappNumber}&text=${encodedMessage}`;
-
-    window.open(whatsappLink, "_blank");
-  } else {
-    alert(
-      "O total da compra deve ser acima de R$ 10,00 para finalizar a compra."
-    );
+// Envia a lista de produtos do carrinho para o WhatsApp
+function enviarParaWhatsApp() {
+  if (carrinho.length === 0) {
+    alert("Seu carrinho está vazio!");
+    return;
   }
+  let mensagem = "Produtos no carrinho:%0A";
+  carrinho.forEach((produto) => {
+    mensagem += `- ${produto.nome} (R$${produto.preco})%0A`;
+  });
+  const total = carrinho.reduce((acc, produto) => acc + produto.preco, 0);
+  mensagem += `%0ATotal: R$${total.toFixed(2)}`;
+
+  const numeroWhatsApp = "558898644389"; // Insira o número com DDI e DDD
+  const url = `https://api.whatsapp.com/qr/PGJKMZLVUACEH1?autoload=${numeroWhatsApp}?text=${mensagem}`;
+  window.open(url, "_blank");
 }
 
-window.onload = () => displayProducts(produtos);
-
-function toggleSidebar() {
-  var sidebar = document.getElementById("sidebar");
-  var content = document.getElementById("content");
-  sidebar.classList.toggle("closed");
-  content.classList.toggle("closed");
+// Função de pesquisa para filtrar produtos pelo nome
+function pesquisarProdutos() {
+  const termo = document.getElementById("barraPesquisa").value.toLowerCase();
+  const produtosFiltrados = produtos.filter((produto) =>
+    produto.nome.toLowerCase().includes(termo)
+  );
+  mostrarProdutos(produtosFiltrados);
 }
+
+// Filtra produtos por categoria
+function filtrarCategoria(categoria) {
+  const produtosFiltrados = categoria
+    ? produtos.filter((produto) => produto.categoria === categoria)
+    : produtos;
+  mostrarProdutos(produtosFiltrados);
+}
+
+// Inicializa a lista de produtos na página
+mostrarProdutos();
+atualizarCarrinho();
