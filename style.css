@@ -1,343 +1,123 @@
-/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Estilos gerais */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 20px;
+  background-color: #242b4d;
 }
 
-/* Cabeçalho e menu */
+.container {
+  max-width: 800px;
+  margin-right: 320px; /* Espaço para a sidebar */
+}
+
 header {
+  text-align: center;
+  color: #f8f8f8;
+}
+button {
+  color: #f8f8f8;
+}
+
+.button {
   background-color: #242b4d;
-  padding: 20px;
-  color: #fff;
-  text-align: center;
-}
-.logo {
-  width: 120px;
-  margin: -50px;
-  overflow-x: hidden;
-  transform: translate(-540px, 43px);
-}
-.h2 {
-  transform: translate(0px, -40px);
-}
-
-/* Barra de pesquisa */
-.search-bar {
-  display: flex;
-  justify-content: center;
-  margin: 0px;
-  transform: translate(8px, 7px);
-}
-
-.search-bar input[type="text"] {
-  width: 40%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px 0 0 5px;
-}
-
-.search-bar button {
-  padding: 10px 20px;
-  background-color: #343d69;
   border: none;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 0 5px 5px 0;
+}
+.bt {
+  background-color: #404b80;
+  border: none;
+  border-radius: 10px;
 }
 
-/* Estilo de categorias */
-.categories {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+button:hover {
+  background-color: #404b80; /* Cor de fundo no hover */
+  color: #fff; /* Cor do texto no hover */
+  border: none;
+  transform: scale(1.03); /* Leve aumento no tamanho */
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.category {
-  margin: 0 10px;
-  color: #343d69;
-  cursor: pointer;
-  font-weight: bold;
+.bt {
+  border: none;
+  background-color: #384277;
 }
 
-.category:hover {
-  text-decoration: underline;
-}
-
-/* Resultados de pesquisa e produtos */
-#searchResults {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.product {
-  transform: translate(-290px, 50px);
-  width: 200px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  margin: 10px;
-  text-align: center;
-  background-color: #fff;
-  border-radius: 8px;
-}
-
-.product img {
+#barraPesquisa {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-.product button {
-  background-color: #242b4d;
-  color: #fff;
-  padding: 8px;
+  padding: 10px;
+  margin: 20px 0;
+  font-size: 16px;
+  border-radius: 10px;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
 }
 
-/* Carrinho */
-#cart {
-  transform: translate(340px, -270px);
-  margin: 20px auto;
-  width: 40%;
-  background-color: #fff;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  text-align: center;
-}
-
-#cart h2 {
-  color: #2e1b33;
+#categorias {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
-#cart button {
-  background-color: #242b4d;
-  color: #fff;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 50px;
-}
-
-.remove-btn {
-  background-color: #242b4d;
-  color: #fff;
-  padding: 5px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 12px;
-  margin-left: 10px;
-}
-.navbar {
+#produtos {
   display: flex;
-  justify-content: center;
-  background-color: #343d69;
-  padding: 10px 0;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: #ddd;
 }
 
-.navbar a {
-  color: #fff;
-  padding: 10px 20px;
-  text-decoration: none;
-  font-size: 16px;
+.produto {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #ddd;
 }
 
-.navbar a:hover {
-  background-color: #242b4d;
+.produto img {
+  margin-right: 10px;
 }
 
-/* Sidebar */
+button {
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 .sidebar {
-  height: 100vh;
-  width: 250px;
-  background-color: #333;
-  color: white;
-  padding-top: 20px;
   position: fixed;
-  right: 0;
   top: 0;
-  transition: width 0.3s;
-  overflow-x: hidden;
-  z-index: 1001;
-}
-
-.sidebar a {
-  padding: 15px 20px;
-  text-decoration: none;
-  color: white;
-  display: block;
-  transition: background-color 0.3s;
-}
-
-.sidebar a:hover {
-  background-color: #575757;
-}
-
-.content {
-  margin-right: 250px;
+  right: 0;
+  width: 300px;
+  height: 100vh;
+  background-color: #242b4d;
   padding: 20px;
-  transition: margin-right 0.3s;
-  flex-grow: 1;
+  border-left: 1px solid #ddd;
+  overflow-y: auto;
+  color: #ffffff;
 }
 
-/* Botão para abrir/fechar a sidebar */
-.toggle-btn {
-  position: absolute;
-  top: 49px;
-  right: 80px;
-  font-size: 24px;
-  color: white;
-  cursor: pointer;
-  background-color: #242b4d;
-  border: none;
-  padding: 7px;
-  border-radius: 5px;
-  width: 45px;
-}
-.toggle-btn2 {
-  position: absolute;
-  top: 5px;
-  right: 190px;
-  font-size: 24px;
-  color: white;
-  cursor: pointer;
-  background-color: #333;
-  border: none;
-  padding: 7px;
-  border-radius: 5px;
-  width: 45px;
-}
-
-/* Quando a sidebar está fechada */
-.sidebar.closed {
-  width: 0;
-  padding: 20px 0;
-}
-
-.content.closed {
-  margin-right: 0;
-}
-.close-btn {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 24px;
-  color: white;
-  cursor: pointer;
-  background-color: #333;
-  border: none;
-  padding: 10px;
-}
-
-footer {
-  background-color: #242b4d;
-  padding: 30px;
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-
-.txtfooter {
-  color: #fff;
-  transform: translate(500px, 0px);
-}
-
-.card {
-  width: fit-content;
-  height: fit-content;
+#carrinhoProdutos {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0px 5px;
-  gap: 15px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.055);
-  position: relative;
-  margin: -18px;
-  top: 55px;
-  left: 71px;
-}
-
-/* for all social containers*/
-.socialContainer {
-  width: 32px;
-  height: 32px;
+  flex-direction: column;
+  gap: 10px;
   background-color: #242b4d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  transition-duration: 0.3s;
-  margin: 0px;
-  border-radius: 7px;
 }
 
-.instagramewhatssap {
-  position: relative;
-  top: -60px;
-  left: -15px;
-}
-/* instagram*/
-.containerOne:hover {
-  background-color: #d62976;
-  transition-duration: 0.3s;
-  position: relative;
+#total {
+  font-weight: bold;
+  margin: 20px 0;
+  color: #242b4d;
 }
 
-/* Whatsapp*/
-.containerFour:hover {
-  background-color: #128c7e;
-  transition-duration: 0.3s;
-}
-
-.socialContainer:active {
-  transform: scale(0.9);
-  transition-duration: 0.3s;
-}
-
-.socialSvg {
-  width: 17px;
-}
-
-.socialSvg path {
-  fill: rgb(255, 255, 255);
-}
-
-.socialContainer:hover .socialSvg {
-  animation: slide-in-top 0.3s both;
-}
-
-@keyframes slide-in-top {
-  0% {
-    transform: translateY(-50px);
-    opacity: 0;
+@media (max-width: 768px) {
+  .container {
+    margin-right: 0;
   }
 
-  100% {
-    transform: translateY(0);
-    opacity: 1;
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    border-left: none;
   }
-}
-.zoom {
-  transition: transform 0.3s ease;
-}
-
-.zoom:hover {
-  transform: scale(1.3);
 }
