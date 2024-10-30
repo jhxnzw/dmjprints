@@ -47,7 +47,7 @@ function displayProducts(filter = "todos") {
           <img src="${product.image}" alt="${product.name}">
           <h3>${product.name}</h3>
           <p>R$ ${product.price.toFixed(2)}</p>
-          <button onclick="addToCart(${
+          <button class="bt2" onclick="addToCart(${
             product.id
           })">Adicionar ao Carrinho</button>
       `;
@@ -83,7 +83,9 @@ function updateCart() {
     const itemDiv = document.createElement("div");
     itemDiv.innerHTML = `
           ${product.name} - R$ ${product.price.toFixed(2)} 
-          <button onclick="removeFromCart(${product.id})">Remover</button>
+          <button class="bt2" onclick="removeFromCart(${
+            product.id
+          })">Remover</button>
       `;
     cartItemsDiv.appendChild(itemDiv);
     total += product.price;
