@@ -97,7 +97,7 @@ function updateCart() {
 }
 
 // Defina aqui o número do WhatsApp (inclua o código do país, sem espaços ou caracteres especiais)
-const whatsappNumber = "5531999999999"; // Exemplo: 55 para Brasil e 31 para Belo Horizonte
+const whatsappNumber = "5588998644389"; // Exemplo: 55 para Brasil e 31 para Belo Horizonte
 
 // Função para enviar a mensagem via WhatsApp
 document.getElementById("whatsapp-button").onclick = function () {
@@ -105,7 +105,7 @@ document.getElementById("whatsapp-button").onclick = function () {
     .map((product) => `${product.name}: R$ ${product.price.toFixed(2)}`)
     .join("%0A");
   const total = cart.reduce((sum, product) => sum + product.price, 0);
-  const whatsappLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${message}%0ATotal: R$ ${total.toFixed(
+  const whatsappLink = `https://api.whatsapp.com/send/?phone=5588998644389&text&type=phone_number&app_absent=0${whatsappNumber}&text=${message}%0ATotal: R$ ${total.toFixed(
     2
   )}`;
   window.open(whatsappLink, "_blank");
