@@ -1,127 +1,113 @@
-// Lista de produtos
-const produtos = [
+const products = [
   {
     id: 1,
-    nome: "Produto A",
-    preco: 10,
-    categoria: "Impressão",
-    imagem: "https://iili.io/2CBy9JR.png",
+    name: "Produto 1",
+    price: 50.0,
+    category: "impressao",
+    image: "https://via.placeholder.com/150",
   },
   {
     id: 2,
-    nome: "Produto B",
-    preco: 15,
-    categoria: "Estampas",
-    imagem: "https://iili.io/2CBy9JR.png",
+    name: "Produto 2",
+    price: 30.0,
+    category: "estampa",
+    image: "https://via.placeholder.com/150",
   },
   {
     id: 3,
-    nome: "Produto C",
-    preco: 20,
-    categoria: "Design Gráfico",
-    imagem: "https://iili.io/2CBy9JR.png",
+    name: "Produto 3",
+    price: 70.0,
+    category: "design",
+    image: "https://via.placeholder.com/150",
   },
   {
     id: 4,
-    nome: "Produto D",
-    preco: 25,
-    categoria: "Impressão",
-    imagem: "https://iili.io/2CBy9JR.png",
-  },
-  {
-    id: 5,
-    nome: "Produto E",
-    preco: 30,
-    categoria: "Impressão",
-    imagem: "https://iili.io/2CBy9JR.png",
+    name: "Produto 4",
+    price: 40.0,
+    category: "impressao",
+    image: "https://via.placeholder.com/150",
   },
 ];
 
-// Carrinho de compras
-let carrinho = [];
+let cart = [];
 
-// Função para exibir os produtos
-function mostrarProdutos(listaProdutos = produtos) {
-  const produtosDiv = document.getElementById("produtos");
-  produtosDiv.innerHTML = "";
-  listaProdutos.forEach((produto) => {
-    const produtoDiv = document.createElement("div");
-    produtoDiv.className = "produto";
-    produtoDiv.innerHTML = `
-          <img src="${produto.imagem}" alt="${produto.nome}" style="width:100px;height:100px;">
-          <span>${produto.nome} - R$${produto.preco}</span>
-          <button class="bt" onclick="adicionarAoCarrinho(${produto.id})">Adicionar ao Carrinho</button>
-        `;
-    produtosDiv.appendChild(produtoDiv);
-  });
-}
+// Função para exibir produtos
+function displayProducts(filter = "todos") {
+  const productList = document.getElementById("product-list");
+  productList.innerHTML = "";
+  const filteredProducts =
+    filter === "todos"
+      ? products
+      : products.filter((product) => product.category === filter);
 
-// Adiciona o produto ao carrinho
-function adicionarAoCarrinho(id) {
-  const produto = produtos.find((prod) => prod.id === id);
-  carrinho.push(produto);
-  atualizarCarrinho();
-}
-
-// Remove o produto do carrinho
-function removerDoCarrinho(id) {
-  carrinho = carrinho.filter((produto) => produto.id !== id);
-  atualizarCarrinho();
-}
-
-// Atualiza a exibição do carrinho na sidebar
-function atualizarCarrinho() {
-  const carrinhoDiv = document.getElementById("carrinhoProdutos");
-  carrinhoDiv.innerHTML = ""; // Limpa o carrinho antes de exibir novamente
-  let total = 0;
-  carrinho.forEach((produto) => {
-    const produtoDiv = document.createElement("div");
-    produtoDiv.className = "produto";
-    produtoDiv.innerHTML = `
-        <span>${produto.nome} - R$${produto.preco}</span>
-        <button class="bt" onclick="removerDoCarrinho(${produto.id})">Removerㅤ</button>
+  filteredProducts.forEach((product) => {
+    const productDiv = document.createElement("div");
+    productDiv.className = "product";
+    productDiv.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>R$ ${product.price.toFixed(2)}</p>
+          <button onclick="addToCart(${
+            product.id
+          })">Adicionar ao Carrinho</button>
       `;
-    carrinhoDiv.appendChild(produtoDiv);
-    total += produto.preco;
+    productList.appendChild(productDiv);
   });
-  document.getElementById("total").innerText = `Total: R$${total.toFixed(2)}`;
 }
 
-// Envia a lista de produtos do carrinho para o WhatsApp
-function enviarParaWhatsApp() {
-  if (carrinho.length === 0) {
-    alert("Seu carrinho está vazio!");
-    return;
-  }
-  let mensagem = "Produtos no carrinho:%0A";
-  carrinho.forEach((produto) => {
-    mensagem += `- ${produto.nome} (R$${produto.preco})%0A`;
+// Função para filtrar produtos
+function filterProducts(category) {
+  displayProducts(category);
+}
+
+// Função para adicionar ao carrinho
+function addToCart(productId) {
+  const product = products.find((p) => p.id === productId);
+  cart.push(product);
+  updateCart();
+}
+
+// Função para remover do carrinho
+function removeFromCart(productId) {
+  cart = cart.filter((p) => p.id !== productId);
+  updateCart();
+}
+
+// Função para atualizar o carrinho
+function updateCart() {
+  const cartItemsDiv = document.getElementById("cart-items");
+  cartItemsDiv.innerHTML = "";
+  let total = 0;
+
+  cart.forEach((product) => {
+    const itemDiv = document.createElement("div");
+    itemDiv.innerHTML = `
+          ${product.name} - R$ ${product.price.toFixed(2)} 
+          <button onclick="removeFromCart(${product.id})">Remover</button>
+      `;
+    cartItemsDiv.appendChild(itemDiv);
+    total += product.price;
   });
-  const total = carrinho.reduce((acc, produto) => acc + produto.preco, 0);
-  mensagem += `%0ATotal: R$${total.toFixed(2)}`;
 
-  const numeroWhatsApp = "558898644389"; // Insira o número com DDI e DDD
-  const url = `https://api.whatsapp.com/qr/PGJKMZLVUACEH1?autoload=${numeroWhatsApp}?text=${mensagem}`;
-  window.open(url, "_blank");
+  document.getElementById("total-price").innerText = `Total: R$ ${total.toFixed(
+    2
+  )}`;
 }
 
-// Função de pesquisa para filtrar produtos pelo nome
-function pesquisarProdutos() {
-  const termo = document.getElementById("barraPesquisa").value.toLowerCase();
-  const produtosFiltrados = produtos.filter((produto) =>
-    produto.nome.toLowerCase().includes(termo)
-  );
-  mostrarProdutos(produtosFiltrados);
-}
+// Defina aqui o número do WhatsApp (inclua o código do país, sem espaços ou caracteres especiais)
+const whatsappNumber = "5531999999999"; // Exemplo: 55 para Brasil e 31 para Belo Horizonte
 
-// Filtra produtos por categoria
-function filtrarCategoria(categoria) {
-  const produtosFiltrados = categoria
-    ? produtos.filter((produto) => produto.categoria === categoria)
-    : produtos;
-  mostrarProdutos(produtosFiltrados);
-}
+// Função para enviar a mensagem via WhatsApp
+document.getElementById("whatsapp-button").onclick = function () {
+  const message = cart
+    .map((product) => `${product.name}: R$ ${product.price.toFixed(2)}`)
+    .join("%0A");
+  const total = cart.reduce((sum, product) => sum + product.price, 0);
+  const whatsappLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${message}%0ATotal: R$ ${total.toFixed(
+    2
+  )}`;
+  window.open(whatsappLink, "_blank");
+};
 
-// Inicializa a lista de produtos na página
-mostrarProdutos();
-atualizarCarrinho();
+// Inicializa os produtos na página
+displayProducts();
