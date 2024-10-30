@@ -1,48 +1,33 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Loja de Produtos</title>
+    <title>Loja Online</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <header>
-        <img src="https://iili.io/2CnaOCB.png" width="120px" />
-        <input
-          type="text"
-          id="barraPesquisa"
-          placeholder="Pesquisar produtos..."
-          oninput="pesquisarProdutos()"
-        />
-        <div id="categorias">
-          <button class="button" onclick="filtrarCategoria('Impressão')">
-            Impressões
-          </button>
-          <button class="button" onclick="filtrarCategoria('Estampas')">
-            Estampas
-          </button>
-          <button class="button" onclick="filtrarCategoria('Design Gráfico')">
-            Design Gráfico
-          </button>
-          <button class="button" onclick="filtrarCategoria('')">Todos</button>
-        </div>
-      </header>
-      <br />
-      <br />
-      <div id="produtos">
-        <!-- Produtos serão adicionados aqui -->
-      </div>
-    </div>
+    <header>
+      <h1>Loja Online</h1>
+    </header>
 
-    <!-- Sidebar do carrinho -->
-    <div class="sidebar" id="sidebar">
-      <h2>Carrinho</h2>
-      <div id="carrinhoProdutos"></div>
-      <p id="total">Total: R$0,00</p>
-      <button class="bt" enviarParaWhatsApp()">Enviar para WhatsApp</button>
-    </div>
+    <nav>
+      <button onclick="filterProducts('todos')">Todos</button>
+      <button onclick="filterProducts('impressao')">Impressão</button>
+      <button onclick="filterProducts('estampa')">Estampa</button>
+      <button onclick="filterProducts('design')">Design Gráfico</button>
+    </nav>
+
+    <main id="product-list">
+      <!-- Produtos serão gerados aqui -->
+    </main>
+
+    <aside id="cart">
+      <h2>Carrinho de Compras</h2>
+      <div id="cart-items"></div>
+      <div id="total-price">Total: R$ 0.00</div>
+      <button id="whatsapp-button">Enviar para WhatsApp</button>
+    </aside>
 
     <script src="script.js"></script>
   </body>
