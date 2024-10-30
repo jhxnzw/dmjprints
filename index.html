@@ -8,22 +8,27 @@
   </head>
   <body>
     <header>
-      <h1>Loja Online</h1>
+      <img src="https://iili.io/2CnaOCB.png" width="130px" />
     </header>
 
     <nav>
-      <button onclick="filterProducts('todos')">Todos</button>
-      <button onclick="filterProducts('impressao')">Impressão</button>
-      <button onclick="filterProducts('estampa')">Estampa</button>
-      <button onclick="filterProducts('design')">Design Gráfico</button>
+      <button class="bt" onclick="filterProducts('todos')">Todos</button>
+      <button class="bt" onclick="filterProducts('impressao')">
+        Impressão
+      </button>
+      <button class="bt" onclick="filterProducts('estampa')">Estampa</button>
+      <button class="bt" onclick="filterProducts('design')">
+        Design Gráfico
+      </button>
     </nav>
 
     <main id="product-list">
       <!-- Produtos serão gerados aqui -->
     </main>
 
-    <aside id="cart">
-      <h2>Carrinho de Compras</h2>
+    <aside class="carrinho" id="cart">
+      <h2>Carrinho</h2>
+
       <div id="cart-items"></div>
       <div id="total-price">Total: R$ 0.00</div>
       <button id="whatsapp-button">Enviar para WhatsApp</button>
